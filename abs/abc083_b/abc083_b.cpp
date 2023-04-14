@@ -15,7 +15,7 @@ int main() {
   cin >> N >> A >> B;
   int ans = 0;
   for(int i=1;i<=N;i++) {
-    if(sumf(i) <= B & sumf(i) >= A) {
+    if(sumf(i) <= B && sumf(i) >= A) {
       ans += i;
     }
   }
