@@ -58,7 +58,7 @@ int main() {
  
 	// 出力
 	cout << Answer.size() << endl;
-	for (int i = 0; i < Answer.size(); i++) {
+	for (int i = 0; i < (int)Answer.size(); i++) {
 		if (i >= 1) cout << " ";
 		cout << Answer[i];
 	}
