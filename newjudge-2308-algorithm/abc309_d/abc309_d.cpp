@@ -31,7 +31,10 @@ int bfs(vector<vector<int>> E,int s) {
             }
         }
     }
-    return *max_element(all(dist)); //max_elementはイテレータを返すので＊をつけてdistの最大値を返す
+    //return *max_element(all(dist)); //max_elementはイテレータを返すので＊をつけてdistの最大値を返す
+    //max_elementなんて知らないのでsortで良いと思った
+    sort(all(dist));
+    return dist[n-1];
 }
 int main(void) {
     int N_1, N_2,M; cin >> N_1 >> N_2 >> M;
