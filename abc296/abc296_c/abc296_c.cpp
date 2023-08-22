@@ -14,21 +14,23 @@ const int INF = 0x3fffffff;
 const ll LINF = 0x1fffffffffffffff;
 
 int main() {
+    //配列を走査しても計算量が膨大になるだけ
     int n,x;
     cin >> n >> x;
-    vector<int> a(n);
-    rep(i,n) cin >> a[i];
-    sort(all(a));
-    int i=0;
-    rep(j,n) {
-        while(i<n && a[i]-a[j]<x) i++;//iはリセットしなくても良い😁
-        //jは開始位置　sort済みであることからiを増やすことでxに近づく　
-        //xを越えたらjを増やしてみる
-        if(i<n && a[i]-a[j]==x) {
-            cout << "Yes" << '\n';
-            return 0;   
+    set<int> s;
+    rep(_,n) {
+        int t;
+        cin >> t;
+        s.insert(t);
+    }
+    //
+    for(auto a:s) { //O(NlogN))
+        if(s.find(a+x)!= s.end()) {
+            cout << "Yes" << endl;
+            return 0;
         }
     }
-    cout << "No" << '\n';
+    cout << "No" << endl;
+    return 0;
 }
 
