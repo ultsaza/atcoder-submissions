@@ -13,24 +13,24 @@ using ll=long long;
 const int INF = 0x3fffffff;
 const ll LINF = 0x1fffffffffffffff;
 
-int main() {
+
+void solve() {
     int n; cin >> n;
-    vector<pair<int,int>> ab;
+    vector<ll> a(n),b(n);
     rep(i,n) {
-        int a,b; cin >> a >> b;
-        ab.emplace_back(a,a+b);
+        cin >> a[i] >> b[i];
     }
-    vector<int> p(n);
-    iota(all(p),0);
-    auto f = [&](int i,int j) {
-        auto [ai,aj] = ab[i];
-        auto [bi,bj] = ab[j];
-        return (ll)ai*bj > (ll) aj*bi;
+    auto cmp = [&](int i, int j) {
+        ll vl = a[i] * (a[j] + b[j]);
+        ll vr = a[j] * (a[i] + b[i]);
+        if(vl != vr) return vl > vr;
+        else return i<j;
     };
-    stable_sort(all(p),f);
-    rep(i,n) cout << p[i]+1 << " ";
+    vector<int> ids(n);
+    iota(all(ids), 0);
+    sort(all(ids), cmp);
+    rep(i,n) cout << ids[i] +1 << " ";
 }
-
-
-
-
+int main() {
+    solve();
+}
