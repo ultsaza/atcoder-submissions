@@ -13,19 +13,16 @@ using ll=long long;
 const int INF = 0x3fffffff;
 const ll LINF = 0x1fffffffffffffff;
 
-int main() {
-    int N,K; cin>>N>>K;
-    vector<int> dp(N+1,INF);
-    dp[1]=0;
-    vector<int> cost(N+1,0);
-    rep(i,1,N+1){
-        cin>>cost[i];
-    }
-    rep(i,2,N+1){
-        rep(j,1,K+1) {
-            if(i-j>0)dp[i]=min(dp[i],dp[i-j]+abs(cost[i]-cost[i-j]));
-        }
-    }
-    cout << dp[N] << '\n';
-}
 
+int main() {
+    int N,K,h[100009],dp[100009];
+    cin >> N >> K;
+    rep(i,1,N+1) cin >> h[i];
+    rep(i,N+1) dp[i] = INF;
+    dp[1] = 0;
+    rep(i,2,N+1) rep(j,1,K+1)if(i-j>0) {
+        dp[i] = min(dp[i],dp[i-j]+abs(h[i]-h[i-j]));
+    }
+    //rep(i,1,N+1) cout<< "dp"<<i<<":"<<dp[i]<<'\n';
+    cout << dp[N];
+}
