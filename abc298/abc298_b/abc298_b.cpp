@@ -36,4 +36,5 @@ int main() {
     }
     if(ans) cout << "Yes" << endl;
     else cout << "No" << endl;
+    // rot res[i][j] = A[N+1-j][i]
 }
