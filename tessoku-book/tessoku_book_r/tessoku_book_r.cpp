@@ -1,53 +1,28 @@
-#include<iostream>
+#include<bits/stdc++.h>
 using namespace std;
 
-int main() {
-    int n,s,a[69];
-    bool dp[69][10009];//dp[i][j]はiまでのカードでjを構成できるかを表す
+int N,S,A[69];
+bool dp[69][100009];
 
-    cin >> n >> s;
-    for(int i=1;i<=n;i++) {
-        cin >> a[i];
+int main() {
+  cin >> N >> S;
+  for(int i=1;i<=N;i++) {
+    cin >> A[i];
+  }
+  dp[0][0]=1;
+  for(int i=1;i<=S;i++) dp[0][i]=0;
+  
+  
+  for(int i=1;i<=N;i++) {
+    for(int j=0;j<=S;j++) {
+      if(j<A[i]) dp[i][j] = dp[i-1][j];
+      else {
+        dp[i][j] = dp[i-1][j-A[i]] | dp[i-1][j];
+      }
     }
-    dp[0][0]=true;
-    for (int i = 1; i <=s; i++)
-    {
-        dp[0][i]=false;
-    }
-    for (int i = 1; i <=n; i++)
-    {
-        for (int j = 0; j <= s; j++)
-        {
-            //a[i]を足せない時の操作
-            if(j<a[i]){
-                if (dp[i-1][j]==true)
-                {
-                    dp[i][j]=true;
-                }
-                else {
-                    dp[i][j]=false;
-                }
-            }
-            //足せる時の操作
-            if (j>=a[i])
-            {
-                if (dp[i-1][j]==true || dp[i-1][j-a[i]]==true)
-                {
-                    dp[i][j]=true;
-                }
-                else {
-                    dp[i][j]=false;                
-                }
-                
-            }
-            
-        }
-        
-    }
-    if(dp[n][s]==true) {
-        cout << "Yes" << endl;
-    } else {
-        cout << "No" << endl;
-    }
-    
+  }
+  
+  if(dp[N][S]) cout << "Yes" << endl;
+  else cout << "No" << endl;
+  
 }
