@@ -1,34 +1,44 @@
-#include<bits/stdc++.h>
-#include<atcoder/all>
+#include <bits/stdc++.h>
+#include <atcoder/all>
 using namespace std;
 using namespace atcoder;
-using ll=long long;
-#define all(v) v.begin(), v.end()
+using ll = long long;
 #define overload4(_1, _2, _3, _4, name, ...) name
-#define rep1(n) for(ll i = 0; i < (n); ++i)
-#define rep2(i, n) for(ll i = 0; i < (n); ++i)
-#define rep3(i, a, b) for(ll i = (a); i < (b); ++i)
-#define rep4(i, a, b, c) for(ll i = (a); i < (b); i += (c))
+#define rep1(n) for (ll i = 0; i < (n); ++i)
+#define rep2(i, n) for (ll i = 0; i < (n); ++i)
+#define rep3(i, a, b) for (ll i = (a); i < (b); ++i)
+#define rep4(i, a, b, c) for (ll i = (a); i < (b); i += (c))
 #define rep(...) overload4(__VA_ARGS__, rep4, rep3, rep2, rep1)(__VA_ARGS__)
-const ll LINF = 0x1fffffffffffffff;
+#define all(i) begin(i), end(i)
+const int INF = 0x3fffffff;
+const ll LINF = 0x1ffffffffffffff;
+
 
 int main() {
-    int n,m; cin >> n >> m;
-    vector<vector<int>> s(m,vector<int> ());
-    rep(i,m) {
-        int c; cin >> c;
-        rep(j,c) {
-            int a; cin >> a;
-            s[i].push_back(a);
+    int n,m;
+    cin >> n >> m;
+    vector<set<int>> S(m);
+    rep(_,m) {
+        int c;
+        cin >> c;
+        rep(i,c) {
+            int a;
+            cin >> a;
+            S[_].insert(a);
         }
     }
+
     int ans=0;
-    rep(i,1<<m) {
-        vector<bool> B(n);
-        rep(x,1,n+1) rep(j,m) if(i>>j & 1) rep(k,s[j].size()) if(s[j][k]==x) B[x-1]=1;
-        bool bsum=1;
-        rep(i,n) bsum = bsum & B[i];
-        if(bsum) ans++;
+
+    for(int i=0;i<(1<<m);i++) {
+        set<int> T={};
+        for(int s=0;s<m;s++) {
+            if(i>>s & 1) {
+                for(auto x:S[s]) T.insert(x);
+            } 
+        }
+        if(T.size()==n) ans++;
     }
-    cout << ans;
+
+    cout << ans << endl;
 }
