@@ -18,24 +18,30 @@ const ll LINF = 0x1ffffffffffffff;
 int main() {
     int n;
     cin >> n;
-    map<ll,ll> cnt;
     vector<int> a(n);
     rep(n) cin >> a[i];
 
     vector<ll> prex(n+1);
     prex[0] = 0;
-    cnt[0] = 1;
-    rep(n) {
-        prex[i+1] = prex[i] + a[i];
-        cnt[prex[i+1]]++;
-    }
+    rep(n) prex[i+1] = prex[i] + a[i];
 
     //prex[r] - prex[l-1] ==0
 
-    ll ans =0;
+    sort(all(prex));
 
-    for(auto [key,value] : cnt) {
-        ans += value * (value-1) / 2;
+    ll ans = 0,part = 1;
+    ll cur = prex[0];
+    rep(i,n) {
+        if(prex[i+1] == cur) {
+            part++;
+        } else {
+            ans += (part * (part - 1)) / 2;
+            part = 1;
+            cur = prex[i+1];
+        }
+
+        if(i == n-1) ans += (part * (part - 1)) / 2;
     }
-    cout << ans << '\n';
+
+    cout << ans << endl;
 }
