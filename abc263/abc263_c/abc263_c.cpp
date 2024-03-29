@@ -14,44 +14,17 @@ const int INF = 0x3fffffff;
 const ll LINF = 0x1ffffffffffffff;
 
 
-vector<vector<int>> dp[10][10]; //S_{N,M}のリスト
-
-//方針: dp[n][m]はdp[n-1][k-1]の成分にkを追加することで構成できる
-//再帰による実装を行う
-
-void solve(int n,int m) {
-    //再帰が終了した時の処理
-    if(dp[n][m].size()) return;
-    
-    if(n==1) {
-        for(int i=1;i<=m;i++) dp[n][m].push_back({i});
-    } else {
-        // kの値（Sの最後の値）で全探索
-
-        for(int k=1;k<=m;k++) {
-            //必要条件
-            if(n-1 <=k-1){
-                solve(n-1,k-1);
-                for(int i=0;i<dp[n-1][k-1].size();i++) {
-                    vector<int> v = dp[n-1][k-1][i];
-                    
-                    v.push_back(k);
-                    dp[n][m].push_back(v);
-                }
-            }
-        }
-    }
-}
-
 int main() {
     int n,m;
     cin >> n >> m;
-    solve(n,m);
-    sort(all(dp[n][m]));
-    for(int i=0;i<dp[n][m].size();i++) {
-        for(int j=0;j<n;j++) {
-            cout << dp[n][m][i][j] << " ";
+    vector<int> a(m);
+    rep(i,n) a[i] = 0;
+    rep(i,n,m) a[i] = 1;
+
+    do{
+        rep(i,m) {
+            if(a[i]==0) cout << i+1 << " ";
         }
         cout << endl;
-    }
+    }while(next_permutation(all(a)));
 }
