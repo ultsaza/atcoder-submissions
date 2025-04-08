@@ -33,33 +33,10 @@ int main() {
         cin>>x;
         b[i] = x-1;
     }
+    two_sat ts(n);
     rep(i,0,m){
-        G[a[i]].push_back(b[i]);
-        G[b[i]].push_back(a[i]);
-
+        ts.add_clause(a[i],true,b[i],true);
+        ts.add_clause(a[i],false,b[i],false);
     }
-    // Gが二部グラフかを判定
-
-    vector<bool> visited(n, false);
-    vector<int> color(n, 0);
-    bool bipartite = true;
-    
-    auto dfs = [&](auto dfs, int v) -> void{
-        visited[v] = true;
-        for (int u : G[v]) {
-            if (!visited[u]) {
-                color[u] = 1 - color[v];
-                dfs(dfs, u);
-            } else if (color[u] == color[v]) {
-                bipartite = false;
-            }
-        }
-    };
-    for (int i = 0; i < n; ++i) {
-        if (!visited[i]) {
-            dfs(dfs, i);
-        }
-    }
-
-    cout << (bipartite ? "Yes" : "No") << endl;
+    cout << (ts.satisfiable() ? "Yes" : "No") << endl;
 }
