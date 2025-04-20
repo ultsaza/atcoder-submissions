@@ -19,31 +19,26 @@ using mint=modint998244353;
 int main() {
     int n,m;
     cin >> n >> m;
-    vector<vector<int>> v(n);
+    vi r(m);
+    vvi v(n);
     rep(i,0,m) {
-        int k; cin >> k;
-        rep(j,0,k) {
-            int a; cin >> a;
+        cin >> r[i];
+        rep(j,0,r[i]) {
+            int a;
+            cin >> a;
             a--;
             v[a].push_back(i);
         }
     }
-    vi b(n);
+    int ans = 0;
     rep(i,0,n) {
-        cin >> b[i];
-        b[i]--;
-    }
-    reverse(all(b));
-    vi ans(n);
-
-    set<int> st;
-    rep(i,0,n) {  
-        ans[i] = m - st.size();
-        rep(j,0,v[b[i]].size()) {
-            st.insert(v[b[i]][j]);
+        int b;
+        cin >> b;
+        b--;
+        for (auto x: v[b]) {
+            r[x]--;
+            if (r[x] == 0) ans++;
         }
-        
+        cout << ans << endl;
     }
-    reverse(all(ans));
-    rep(i,0,n) cout << ans[i] << endl;
 }
