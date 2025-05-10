@@ -14,32 +14,30 @@ using ld = long double;
 //#pragma GCC target("avx2")
 //#pragma GCC optimize("O3")
 //#pragma GCC optimize("unroll-loops")
-using mint=modint998244353;
+using mint=modint1000000007;
 
 int main() {
     int n,m;
     cin >> n >> m;
-    vvi G(n);
     dsu uf(n);
-    rep(i,0,m) {
-        int a,b;
-        cin >> a >> b;
-        a--;
-        b--;
-        G[a].push_back(b);
-        G[b].push_back(a);
-        uf.merge(a,b);
+    vi deg(n,0);
+    rep(i,0,m){
+        int u,v;
+        cin >> u >> v;
+        u--;v--;
+        uf.merge(u,v);
+        deg[u]++;
+        deg[v]++;
     }
-    rep(i,0,n) {
-        if (G[i].size() != 2) {
+    if (uf.size(0) != n) {
+        cout << "No" << endl;
+        return 0;
+    }
+    rep(i,0,n){
+        if(deg[i]!=2){
             cout << "No" << endl;
             return 0;
         }
     }
-    if(uf.size(0) != n) {
-        cout << "No" << endl;
-        return 0;
-    }
     cout << "Yes" << endl;
-    
 }
