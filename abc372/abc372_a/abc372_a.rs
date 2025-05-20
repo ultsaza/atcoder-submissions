@@ -1,9 +1,8 @@
 use proconio::input;
-
+use proconio::marker::Chars;
 fn main() {
     input! {
-        mut s: String,
+        s: Chars,
     }
-    s.retain(|x| x!='.');
-    println!("{}", s);
+    println!("{}", s.iter().filter(|&&s| s != '.').collect::<String>());
 }
