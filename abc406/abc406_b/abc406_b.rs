@@ -4,20 +4,14 @@ fn main() {
     input! {
         n: usize,
         k: usize,
+        a: [u64; n],
     }
-    let mut ans: u64 = 1;
-    let b: u64 = 10_u64.pow(k as u32);
-
-    for _i in 0..n {
-        input! {
-            a: u64,
-        }
-        if ans.saturating_mul(a) >= b {
-            ans = 1;
+    let ans = a.iter().fold(1_u64,|acc, &a| {
+        if acc.saturating_mul(a) >= 10_u64.pow(k as u32) {
+            1
         } else {
-            ans *= a;
+            acc.saturating_mul(a)
         }
-    }
+    });
     println!("{}", ans);
-    
 }
