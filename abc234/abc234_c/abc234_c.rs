@@ -7,7 +7,7 @@ fn main() {
     }
     let mut ans = String::new();
     while k > 0 {
-        ans = format!("{}", 2 * (k % 2)) + &ans;
+        ans = (2 * (k % 2)).to_string() + &ans;
         k /= 2;
     }
     println!("{}", ans);
