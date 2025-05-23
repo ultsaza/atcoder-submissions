@@ -22,16 +22,16 @@ fn main() {
         match t {
             1 => {
                 println!("{}", x[u].len());
-                for py in x[u].iter() {
-                    y[*py].remove(&(u));
-                }
+                x[u].iter().for_each(|&py| {
+                    y[py].remove(&(u));
+                });
                 x[u].clear();
             }
             2 => {
                 println!("{}", y[u].len());
-                for px in y[u].iter() {
-                    x[*px].remove(&(u));
-                }
+                y[u].iter().for_each(|&px| {
+                    x[px].remove(&(u));
+                });
                 y[u].clear();
             }
             _ => unreachable!(),
