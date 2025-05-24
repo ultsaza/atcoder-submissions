@@ -12,33 +12,28 @@ fn main() {
 
 #[memoise_map(l,r)]
 fn dfs(l: usize, r: usize, n: usize,a: &[isize]) -> isize {
+    let t = n - (r - l + 1);
     if l > r {
         return 0;
     }
-    let t = n - (r - l + 1);
-    let mut res;
     if l == r {
         match t%2 {
             0 => {
-                res = a[l] ;
+                return a[l];
             }
             1 => {
-                res = -a[l] ;
+                return -a[l];
             }
             _ => unreachable!(),
         }
-        return res;
     }
     match t%2 {
         0 => {
-            res = isize::MIN;
-            res=res.max(dfs(l+1, r, n, a) + a[l] as isize).max(dfs(l, r-1, n, a) + a[r] as isize);
+            return isize::MIN.max(dfs(l+1, r, n, a) + a[l]).max(dfs(l, r-1, n, a) + a[r]);
         }
         1 => {
-            res = isize::MAX;
-            res=res.min(dfs(l+1, r, n, a) - a[l] as isize).min(dfs(l, r-1, n, a) - a[r] as isize);
+            return isize::MAX.min(dfs(l+1, r, n, a) - a[l]).min(dfs(l, r-1, n, a) - a[r]);
         }
         _ => unreachable!(),
     }
-    return res;
 }
