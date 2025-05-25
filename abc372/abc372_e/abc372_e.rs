@@ -17,7 +17,7 @@ impl UnionFind {
         Self {
             parent: (0..n).collect(),
             size: vec![1; n],
-            set,
+            set: set,
         }
     }
     
