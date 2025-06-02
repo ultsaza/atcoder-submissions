@@ -12,8 +12,11 @@ fn main() {
 
     let mut ans: usize = (1 << 30) - 1;
     for i in (0..30).rev() {
-        for (u, v, _w) in uvw.iter().filter(|(_, _, w) | (ans - (1 << i)) | w == (ans - (1 << i))) {
-            uf.merge(*u, *v);
+        for &(u, v, _w) in uvw
+            .iter()
+            .filter(|(_, _, w)| (ans - (1 << i)) | w == (ans - (1 << i)))
+        {
+            uf.merge(u, v);
         }
         if uf.same(0, n - 1) {
             ans -= 1 << i;
