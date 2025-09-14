@@ -5,48 +5,48 @@ using namespace atcoder;
 #define rep(i, l, r) for (ll i = (l); i < (r); ++i)
 #define all(x) (x).begin(), (x).end()
 using ll = long long;
-using vi = vector<int>;
-using vvi = vector<vi>;
 using pl = pair<ll,ll>;
+using vi = vector<int>;
+using vvi = vector<vector<int>>;
 using vl = vector<ll>;
 using vvl = vector<vector<ll>>;
-using ld = long double;
-//#pragma GCC target("avx2")
-//#pragma GCC optimize("O3")
-//#pragma GCC optimize("unroll-loops")
-using mint=modint1000000007;
-const ll INF = 1e18;
+#define INF 10e18
+#pragma GCC optimize("O3")
+#pragma GCC optimize("unroll-loops")
+using mint=modint998244353;
 
 int main() {
-    int h,w,n;
+    ll h,w,n;
     cin >> h >> w >> n;
-    vector<set<int>> x(h), y(w);
-    rep(i,0,n) {
-        int a,b;
-        cin >> a >> b;
-        a--; b--;
-        x[a].insert(b);
-        y[b].insert(a);
+    map<ll, set<ll>> gx, gy;
+    rep(i, 0, n) {
+        ll x, y;
+        cin >> x >> y;
+        gx[x].insert(y);
+        gy[y].insert(x);
     }
-    int q;
+    ll q;
     cin >> q;
-    rep(i,0,q) {
-        int t, u;
-        cin >> t >> u;
-        if (t == 1) {
-            u--;
-            cout << x[u].size() << endl;
-            for(auto v : x[u]) {
-                y[v].erase(u);
+    while(q--) {
+        ll t, c;
+        cin >> t >> c;
+        switch (t) {
+            case 1: {
+                cout << gx[c].size() << "\n";
+                for (auto y: gx[c]) {
+                    gy[y].erase(c);
+                }
+                gx[c].clear();
             }
-            x[u].clear();
-        } else {
-            u--;
-            cout << y[u].size() << endl;
-            for(auto v : y[u]) {
-                x[v].erase(u);
+            break;
+            case 2: {
+                cout << gy[c].size() << "\n";
+                for (auto x: gy[c]) {
+                    gx[x].erase(c);
+                }
+                gy[c].clear();
             }
-            y[u].clear();
+            break;
         }
     }
 }
