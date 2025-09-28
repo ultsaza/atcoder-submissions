@@ -48,11 +48,11 @@ int main() {
         rep(d,0,4) {
             if (i+dx[d] < 0 || i+dx[d] >= h || j+dy[d] < 0 || j+dy[d] >= w || 
             g[i+dx[d]][j+dy[d]] == '#') continue;
-                bool ok = 1;
-                rep(e,0,4) {
-                    if (dx[d]+dx[e]==0 && dy[d]+dy[e]==0) continue;
-                    if (i+dx[d]+dx[e] < 0 || i+dx[d]+dx[e] >= h || j+dy[d]+dy[e] < 0 || j+dy[d]+dy[e] >= w) continue;
-                    if (g[i+dx[d]+dx[e]][j+dy[d]+dy[e]] == '#') ok = 0;
+            bool ok = 1;
+            rep(e,0,4) {
+                if (dx[d]+dx[e]==0 && dy[d]+dy[e]==0) continue;
+                if (i+dx[d]+dx[e] < 0 || i+dx[d]+dx[e] >= h || j+dy[d]+dy[e] < 0 || j+dy[d]+dy[e] >= w) continue;
+                if (g[i+dx[d]+dx[e]][j+dy[d]+dy[e]] == '#') ok = 0;
                 }
             if (ok) {
                 q.push({i+dx[d], j+dy[d]});
