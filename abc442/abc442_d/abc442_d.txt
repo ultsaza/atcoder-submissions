@@ -13,33 +13,27 @@ using vvl = vector<vector<ll>>;
 #pragma GCC optimize("unroll-loops")
 using mint = modint998244353;
 
-ll op(ll a, ll b) { return a+ b; }
-ll e() { return 0 ; }
-
 int main() {
     ll n,q;
-    cin >> n >> q;
-    segtree<ll, op, e> seg(n);
+    cin >> n>>q;
+    vl a(n+1, 0);
+    rep(i,0,n) cin >> a[i];
+    vl s(n+1, 0);
     rep(i,0,n) {
-        ll a;
-        cin >> a;
-        seg.set(i,a);
+        s[i+1] += s[i] + a[i];
     }
-    rep(i,0,q) {
-        ll t;
-        cin >> t;
-        if (t == 1) {
-            ll x; cin >> x;
-            ll l = seg.get(x-1);
-            ll r = seg.get(x);
-            seg.set(x-1, r);
-            seg.set(x, l);
+    rep(_,0,q) {
+        ll t; cin >> t;
+        if (t==1) {
+            ll x;
+            cin >> x;
+            swap(a[x-1], a[x]);
+            s[x] = s[x+1] - a[x];
         } else {
-            ll l,r;
+            ll l, r;
             cin >> l >> r;
-            cout << seg.prod(l-1, r) << endl;
+            cout << s[r] - s[l-1] << endl;
         }
     }
-
+    
 }
-
