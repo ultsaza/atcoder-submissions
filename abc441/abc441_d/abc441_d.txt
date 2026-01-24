@@ -1,0 +1,56 @@
+#include <bits/stdc++.h>
+#include <atcoder/all>
+using namespace std;
+using namespace atcoder;
+#define rep(i, l, r) for (ll i = (l); i < (r); ++i)
+#define all(x) (x).begin(), (x).end()
+using ll = long long;
+using pl = pair<ll, ll>;
+using vl = vector<ll>;
+using vvl = vector<vector<ll>>;
+#pragma GCC target("avx2")
+#pragma GCC optimize("O3")
+#pragma GCC optimize("unroll-loops")
+using mint = modint1000000007;
+
+struct E {
+    ll v;
+    ll c;
+};
+
+int main() {
+    ll n,m,l,s,t;
+    cin >> n>>m>>l>>s>>t;
+    vector<vector<E>> g(n);
+    rep(i,0,m) {
+        ll u,v,c;
+        cin >> u >> v >> c;
+        u--;v--;
+        g[u].push_back({v, c});
+    }
+    set<ll> ans = {};
+    auto dfs = [&](auto self,ll v, ll cnt, ll sum) -> void {
+        if(cnt > l) {
+            return;
+        }
+        if (cnt == l && (sum >= s && sum <= t)) {
+            ans.insert(v+1);
+        }
+        for(auto ne: g[v]) {
+            self(self, ne.v, cnt + 1, sum + ne.c);
+        }
+    };
+
+    dfs(dfs, 0, 0, 0);
+
+    vl out;
+    for(auto v: ans) {
+        out.push_back(v);
+    }
+    sort(all(out));
+    for(auto v: out) {
+        cout << v << " ";
+    }
+
+
+}
