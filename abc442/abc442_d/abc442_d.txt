@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+#include <atcoder/all>
+using namespace std;
+using namespace atcoder;
+#define rep(i, l, r) for (ll i = (l); i < (r); ++i)
+#define all(x) (x).begin(), (x).end()
+using ll = long long;
+using pl = pair<ll, ll>;
+using vl = vector<ll>;
+using vvl = vector<vector<ll>>;
+#pragma GCC target("avx2")
+#pragma GCC optimize("O3")
+#pragma GCC optimize("unroll-loops")
+using mint = modint998244353;
+
+ll op(ll a, ll b) { return a+ b; }
+ll e() { return 0 ; }
+
+int main() {
+    ll n,q;
+    cin >> n >> q;
+    segtree<ll, op, e> seg(n);
+    rep(i,0,n) {
+        ll a;
+        cin >> a;
+        seg.set(i,a);
+    }
+    rep(i,0,q) {
+        ll t;
+        cin >> t;
+        if (t == 1) {
+            ll x; cin >> x;
+            ll l = seg.get(x-1);
+            ll r = seg.get(x);
+            seg.set(x-1, r);
+            seg.set(x, l);
+        } else {
+            ll l,r;
+            cin >> l >> r;
+            cout << seg.prod(l-1, r) << endl;
+        }
+    }
+
+}
+
