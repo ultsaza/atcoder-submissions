@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+#include <atcoder/all>
+using namespace std;
+using namespace atcoder;
+#define rep(i, l, r) for (ll i = (l); i < (r); ++i)
+#define all(x) (x).begin(), (x).end()
+using ll = long long;
+using pl = pair<ll, ll>;
+using vl = vector<ll>;
+using vvl = vector<vector<ll>>;
+#pragma GCC target("avx2")
+#pragma GCC optimize("O3")
+#pragma GCC optimize("unroll-loops")
+using mint = modint998244353;
+
+int main() {
+    ll n;
+    cin >> n;
+    vector<string> s(n);
+    rep(i,0,n) cin >> s[n-1-i];
+    vvl ci(n+1, vl(n+1, 0));
+    vvl cj(n+1, vl(n+1, 0));
+    rep(i,0,n) {
+        rep(j,0,n) {
+            ci[i+1][j] = ci[i][j] + (s[i][j] == '.');
+            cj[i][j+1] = cj[i][j] + (s[i][j] == '#');
+        }
+    }
+    vvl dp(n+1, vl(n+1, (ll)1e9));
+    dp[0][0] = 0;
+    rep(i,0,n+1) rep(j,0,n+1) {
+        if (i < n) {
+            dp[i+1][j] = min(dp[i+1][j], dp[i][j] + cj[i][j]);
+        }
+
+        if (j < n) {
+            dp[i][j+1] = min(dp[i][j+1], dp[i][j] + ci[i][j]);
+        }
+    }
+    cout << dp[n][n] ;
+}
