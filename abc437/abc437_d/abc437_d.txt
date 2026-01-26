@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+#include <atcoder/all>
+using namespace std;
+using namespace atcoder;
+#define rep(i, l, r) for (ll i = (l); i < (r); ++i)
+#define all(x) (x).begin(), (x).end()
+using ll = long long;
+using pl = pair<ll, ll>;
+using vl = vector<ll>;
+using vvl = vector<vector<ll>>;
+#pragma GCC target("avx2")
+#pragma GCC optimize("O3")
+#pragma GCC optimize("unroll-loops")
+using mint = modint998244353;
+
+int main() {
+    ll n,m;
+    cin >> n >> m;
+    vector<ll> a(n), b(m);
+    rep(i,0,n) {
+        ll x; cin >> x;
+        a[i] = x;
+    }
+    rep(i,0,m) {
+        ll x; cin >> x;
+        b[i] = x;
+    }
+    sort(all(a));
+    sort(all(b));
+    vector<mint> s(m+1);
+    rep(i,0,m) {
+        s[i+1] += s[i] + b[i];
+    }
+    mint ans = 0;
+    ll j = 0;
+    rep(i,0,n) {
+        while(j < m && a[i] >= b[j]) {
+            j++;
+        }
+        ans += (2*j-m)*a[i] - s[j] + (s[m] - s[j]);
+    }
+    cout << ans.val() << endl;
+
+}
