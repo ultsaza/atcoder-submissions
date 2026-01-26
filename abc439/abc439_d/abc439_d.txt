@@ -22,9 +22,15 @@ int main() {
     map<ll,ll> mr;
     ll ans = 0;
     rep(j,0,n) {
-        ans += ml[a[j]*7/5] * (a[j]*7 % 5 == 0) * ml[a[j]*3/5] * (a[j]*3 % 5 == 0);
-        ans += mr[a[n-1-j]*7/5] * (a[n-1-j]*7 % 5 == 0) * mr[a[n-1-j]*3/5] * (a[n-1-j]*3 % 5 == 0);
+        if (a[j] % 5 == 0) {
+            ans += ml[a[j]*7/5] * ml[a[j]*3/5];
+        }
         ml[a[j]]++;
+    }
+    rep(j,0,n) {
+        if (a[n-1-j] % 5 == 0) {
+            ans += mr[a[n-1-j]*7/5] * mr[a[n-1-j]*3/5];
+        }
         mr[a[n-1-j]]++;
     }
     cout << ans << endl;
