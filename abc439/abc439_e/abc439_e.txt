@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+#include <atcoder/all>
+using namespace std;
+using namespace atcoder;
+#define rep(i, l, r) for (ll i = (l); i < (r); ++i)
+#define all(x) (x).begin(), (x).end()
+using ll = long long;
+using pl = pair<ll, ll>;
+using vl = vector<ll>;
+using vvl = vector<vector<ll>>;
+#pragma GCC target("avx2")
+#pragma GCC optimize("O3")
+#pragma GCC optimize("unroll-loops")
+using mint = modint998244353;
+
+int main() {
+    ll n;
+    cin >> n;
+    vector<pair<ll, ll>> ab(n);
+    rep(i, 0, n) {
+        cin >> ab[i].first >> ab[i].second;
+    }
+    sort(all(ab), [&](auto x, auto y) {
+        if (x.first == y.first) {
+            return x.second > y.second;
+        }
+        else {
+            return x.first < y.first;
+        }
+        });
+    vl dp;
+    rep(i, 0, n) {
+        ll x = lower_bound(all(dp), ab[i].second) - begin(dp);
+        if (x == dp.size()) {
+            dp.push_back(ab[i].second);
+        }
+        else {
+            dp[x] = ab[i].second;
+        }
+    }
+    cout << dp.size() << endl;
+}
