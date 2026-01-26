@@ -13,19 +13,32 @@ using vvl = vector<vector<ll>>;
 #pragma GCC optimize("unroll-loops")
 using mint = modint998244353;
 
+
+ll op(ll a, ll b) {
+    return max(a, b);
+}
+
+ll e() {
+    return 0;
+}
+
 int main() {
     ll n;
     cin >> n;
-    vl a(n);
-    rep(i,0,n) cin >> a[i];
-    vl dp(n+1, 2e9);
-    dp[0] = 0;
-    ll res = 0;
+    vector<pair<ll,ll>> p(n);
     rep(i,0,n) {
-        ll j = lower_bound(all(dp), a[i]) - dp.begin();
-        dp[j] = a[i];
-        res = max(res, j);
+        ll a; cin >> a;
+        p[i] = { a, i };
     }
-    cout << res << endl;
-
+    sort(all(p), [&](auto x, auto y){ 
+        if (x.first == y.first) {
+            return x.second > y.second;
+        }
+        return x.first < y.first ;});
+    segtree<ll, op, e> seg(n+1);
+    rep(i,0,n) {
+        ll x = seg.prod(0, p[i].second);
+        seg.set(p[i].second,  x+ 1);
+    }
+    cout << seg.all_prod() << endl;
 } 
