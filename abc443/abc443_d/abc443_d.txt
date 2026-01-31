@@ -1,0 +1,56 @@
+#include <bits/stdc++.h>
+#include <atcoder/all>
+using namespace std;
+using namespace atcoder;
+#define rep(i, l, r) for (ll i = (l); i < (r); ++i)
+#define all(x) (x).begin(), (x).end()
+using ll = long long;
+using pl = pair<ll, ll>;
+using vl = vector<ll>;
+using vvl = vector<vector<ll>>;
+#pragma GCC target("avx2")
+#pragma GCC optimize("O3")
+#pragma GCC optimize("unroll-loops")
+using mint = modint998244353;
+
+int main() {
+    ll t;
+    cin >> t;
+    while(t--) {
+        ll n; cin >> n;
+        priority_queue<pl, vector<pl>, greater<pl>> pq;
+        vl rr(n);
+        vl a(n);
+        rep(i,0,n) {
+            ll r;
+            cin >> r;
+            pq.push({r, i});
+            a[i]=r;
+            rr[i] = r;
+        }
+        ll ans = 0;
+        vl prr(n, -1);
+        while(!pq.empty()) {
+            auto [r, i] = pq.top();
+            pq.pop();
+            if(rr[i] != r) {
+                continue;
+            }
+            if (i!=0 && rr[i-1] > rr[i] +1) {
+
+                rr[i-1] = rr[i]+1;
+                pq.push({rr[i-1], i-1});
+            }
+            if (i!=n-1 && rr[i+1] > rr[i] + 1) { 
+
+                rr[i+1] = rr[i]+1;
+                pq.push({rr[i+1], i+1});
+            } 
+        }
+        rep(i,0,n) {
+            ans += a[i] - rr[i];
+        }
+        cout << ans << endl;
+
+    }
+}
