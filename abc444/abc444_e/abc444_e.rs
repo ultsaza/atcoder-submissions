@@ -8,9 +8,7 @@ fn main() {
         d: isize,
         a: [isize; n]
     }
-    let mut s = BTreeSet::new();
-    s.insert(-2e9 as isize);
-    s.insert(2e9 as isize);
+    let mut s = BTreeSet::from([-2e9 as isize, 2e9 as isize]);
     let mut r = 0;
     let mut ans = 0;
     for l in 0..n {
