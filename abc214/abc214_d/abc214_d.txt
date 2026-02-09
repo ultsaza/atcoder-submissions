@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+#include <atcoder/all>
+using namespace std;
+using namespace atcoder;
+#define rep(i, l, r) for (ll i = (l); i < (r); ++i)
+#define all(x) (x).begin(), (x).end()
+using ll = long long;
+using pl = pair<ll, ll>;
+using vl = vector<ll>;
+using vvl = vector<vector<ll>>;
+#pragma GCC target("avx2")
+#pragma GCC optimize("O3")
+#pragma GCC optimize("unroll-loops")
+using mint = modint998244353;
+
+struct E {
+    ll w;
+    ll u;
+    ll v;
+};
+
+int main() {
+    ll n;
+    cin >> n;
+    vector<E> e(n-1);
+    rep(i,0,n-1) {
+        cin >> e[i].u >> e[i].v >> e[i].w;
+    }
+    sort(all(e), [&](auto x, auto y) {
+        return x.w < y.w;
+    });
+    dsu uf(n+1);
+    ll ans = 0;
+    rep(i,0,n-1) {
+       ans += e[i].w*uf.size(e[i].u) * uf.size(e[i].v);
+       uf.merge(e[i].u, e[i].v);
+    }
+    cout << ans << endl;
+}
