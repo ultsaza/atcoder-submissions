@@ -21,21 +21,19 @@ int main() {
     ll m = 0;
     rep(i,0,s.size()) {
         if (s[i] == '1') {
-            m += (1LL << i);
+            m |= (1LL << i);
         }
     }
     if (m > n) {
         cout << -1 << endl;
         return 0;
     }
-    reverse(all(s));
-    ll ans = m;
-    rep(i,0,s.size()) {
+    for(ll i = s.size()-1; i>=0; i--) {
         if (s[i] == '?') {
-            if (ans + (1LL<<(s.size() - 1 - i)) <= n) {
-                ans += (1LL<<(s.size() - 1- i));
+            if ((m | (1LL<< i)) <= n) {
+                m |= (1LL<<i);
             }
         }
     }
-    cout << ans << endl;
+    cout << m << endl;
 }
